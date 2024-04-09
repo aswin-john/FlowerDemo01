@@ -3,7 +3,8 @@ import {
     View,
     Text,
     StyleSheet,
-    TextInput
+    TextInput,
+    FlatList
     
   } from 'react-native'
 
@@ -18,6 +19,9 @@ import HeartIcon from 'react-native-vector-icons/AntDesign'
 import LocationIcon from 'react-native-vector-icons/Octicons'
 import LocationPickIcon from 'react-native-vector-icons/MaterialIcons'
 
+import FlowerSlide from "../components/FlowerSlide";
+import FlowerSlideItem from "../components/FlowerSlideItem";
+
 
 
 
@@ -26,22 +30,18 @@ export default function HomeScreen() {
     <View style={styles.container}>
 
       <View style={styles.rowContainer}>
-      <View style={styles.locationGroup}>
+          <View style={styles.locationGroup}>
+            <LocationIcon name="location" size={30} color="#148fcc" style={styles.locationIcon}/>
+            <Text style={styles.locationText}>O'fallon,63368</Text>
+            <LocationPickIcon name="keyboard-arrow-down" size={30} color="#148fcc" style={styles.locationPickIcon}/>
+          </View>
 
 
-        <LocationIcon name="location" size={30} color="#148fcc" style={styles.locationIcon}/>
-        <Text style={styles.locationText}>O'fallon,63368</Text>
-        <LocationPickIcon name="keyboard-arrow-down" size={30} color="#148fcc" style={styles.locationPickIcon}/>
+          <View style={styles.iconGroup}>
+              <NotiIcon name="notifications" size={30} color="#148fcc"  style={styles.notiIcon}/>
+              <HeartIcon name="heart" size={30} color="#148fcc" />
+          </View>
       </View>
-
-
-        <View style={styles.iconGroup}>
-          <NotiIcon name="notifications" size={30} color="#148fcc"  style={styles.notiIcon}/>
-          <HeartIcon name="heart" size={30} color="#148fcc" />
-        </View>
-        </View>
-
-
 
       <View style={styles.rowContainer}>
         <TextInput style={styles.input}
@@ -49,18 +49,30 @@ export default function HomeScreen() {
         />
         <FilterIcon name="filter-outline" size={30} color="#148fcc" />
       </View>
-      
-      
-      
-
-      
 
 
+      {/* <View> */}
+      <FlatList 
+          data = {FlowerSlide} 
+          renderItem={({item}) => <FlowerSlideItem item = {item}/>}
+          horizontal
+          
+          showsHorizontalScrollIndicator
+          pagingEnabled
+          bounces={false}
+          
+      />
+      {/* </View> */}
+
+
+
+
+                    
       <View style={styles.footer}>
         <View style={styles.iconContainer}>
           <Icon1 name="home" size={30} color="black" /> 
           <Text style={styles.footerText}>Home</Text>
-       </View>
+        </View>
 
         <View style={styles.iconContainer}>
           <Icon2 name="category" size={30} color="black" />
