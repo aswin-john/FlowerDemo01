@@ -1,10 +1,11 @@
-import React from 'react'
+import React, { useState,useRef } from 'react'
 import {
     View,
     Text,
     StyleSheet,
     TextInput,
-    FlatList
+    FlatList,
+    Animated
     
   } from 'react-native'
 
@@ -21,11 +22,28 @@ import LocationPickIcon from 'react-native-vector-icons/MaterialIcons'
 
 import FlowerSlide from "../components/FlowerSlide";
 import FlowerSlideItem from "../components/FlowerSlideItem";
+import Paginator from "../components/Paginator";
 
+import FlowerList from "../components/FlowerList";
+import FlowerListItem from "../components/FlowerListItem";
 
 
 
 export default function HomeScreen() {
+  const [currentIndex,setCurrentIndex] = useState(0)
+  const scrollX = useRef(new Animated.Value(0)).current;
+  const slideRef = useRef(null);
+
+  const viewConfig = useRef({viewAreaCoveragePercentThreshold: 50}).current;
+
+  const viewableItemsChanged = useRef(({ viewableItems}) => {
+    // Your code to handle viewable items changes
+    // console.log("Visible items are", viewableItems);
+    // console.log("Changed in this iteration", changed);
+    setCurrentIndex(viewableItems[0].index);
+  }).current;
+
+
   return (
     <View style={styles.container}>
 
@@ -48,23 +66,49 @@ export default function HomeScreen() {
         placeholder="Search"
         />
         <FilterIcon name="filter-outline" size={30} color="#148fcc" />
+        
       </View>
+      <Text>Special Offer</Text>
 
 
-      {/* <View> */}
+      
+      {/* Flatlist below indicates the flower slide horizontal carousel effect */}
+      <View style={styles.rowFlatcontainer}>
       <FlatList 
           data = {FlowerSlide} 
           renderItem={({item}) => <FlowerSlideItem item = {item}/>}
           horizontal
           
-          showsHorizontalScrollIndicator
+          showsHorizontalScrollIndicator={false}
           pagingEnabled
           bounces={false}
-          
+          keyExtractor={item => item.id} // Unique key for each item
+          onScroll={Animated.event([{nativeEvent: { contentOffset: { x: scrollX } } }],
+            {
+              useNativeDriver: false,
+            }
+          )}
+          scrollEventThrottle={32}
+         onViewableItemsChanged={viewableItemsChanged} 
+         viewabilityConfig={viewConfig}
+         ref={slideRef}
       />
-      {/* </View> */}
+      </View>
+      <Paginator data = {FlowerSlide} scrollX={scrollX}/>
+      
 
+      {/* <Text>Recommended for you</Text> */}
+      {/* Flatlist below indicates the flower list vertical scroll */}
+      <View style={styles.colFlatcontainer}>
+      <FlatList
+      data = {FlowerList} 
+      renderItem={({item}) => <FlowerListItem item = {item}/>}
+      numColumns={2}
+      // contentContainerStyle={{gap: 10,padding: 50}}
+      columnWrapperStyle={{gap: 10}}
 
+      />
+      </View>
 
 
                     
@@ -184,5 +228,16 @@ const styles = StyleSheet.create({
     locationPickIcon: {
       marginLeft: -15, 
     },
+
+    rowFlatcontainer: {
+      flex: 1,
+       
       
+  },
+  colFlatcontainer: {
+    flex: 1,
+     
+    
+},
+    
   });

@@ -22,7 +22,7 @@ export default function FlowerSlideItem({item}) {
 const styles = StyleSheet.create({
    
     container: {
-        flex: 1,
+        // flex: 1,
         backgroundColor: '#fff',
         
         // paddingHorizontal: 20,
@@ -30,9 +30,9 @@ const styles = StyleSheet.create({
         
     },
     image: {
-        flex: 0.3,
+        // flex: 0.3,
         justifyContent: 'center', 
-        // alignItems: 'center',
+        alignItems: 'center',
         
         
     },
