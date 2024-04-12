@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
 
         flex: 1,
         maxWidth: "50%",
-        borderWidth: 1,
+        // borderWidth: 1,
         height: 250,
         flexDirection: 'column',
         justifyContent: 'center',
@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
         // marginBottom: 10, // Reduce space between the image and text below
         width: '100%',
         height: '70%',
-        borderRadius: 100,
+        borderRadius: 25,
     },
     text: {
         fontSize: 18,

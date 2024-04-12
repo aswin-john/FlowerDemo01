@@ -1,4 +1,4 @@
-import React, { useState,useRef } from 'react'
+import React, { useState,useRef,useEffect } from 'react'
 import {
     View,
     Text,
@@ -27,6 +27,8 @@ import Paginator from "../components/Paginator";
 import FlowerList from "../components/FlowerList";
 import FlowerListItem from "../components/FlowerListItem";
 
+import flowerSlideData from '../components/FlowerSlide';
+
 
 
 export default function HomeScreen() {
@@ -42,6 +44,39 @@ export default function HomeScreen() {
     // console.log("Changed in this iteration", changed);
     setCurrentIndex(viewableItems[0].index);
   }).current;
+
+  const [ForwardDirection, setForwardDirection] = useState(null);
+  useEffect(() => {
+    const timer = setInterval(() => {
+      // Determine next index
+      let nextIndex;
+      if (ForwardDirection) {
+        nextIndex = currentIndex + 1;
+        if (nextIndex >= flowerSlideData.length) {
+          nextIndex = flowerSlideData.length - 2;
+          setForwardDirection(false);
+        }
+      } else {
+        nextIndex = currentIndex - 1;
+        if (nextIndex < 0) {
+          nextIndex = 1;
+          setForwardDirection(true);
+        }
+      }
+
+      setCurrentIndex(nextIndex);
+
+      // Scroll to the next index
+      if (slideRef.current) {
+        slideRef.current.scrollToIndex({
+          index: nextIndex,
+          animated: true,
+        });
+      }
+    }, 2000);
+
+    return () => clearInterval(timer);
+  }, [currentIndex, flowerSlideData.length, ForwardDirection]);
 
 
   return (
@@ -75,7 +110,7 @@ export default function HomeScreen() {
       {/* Flatlist below indicates the flower slide horizontal carousel effect */}
       <View style={styles.rowFlatcontainer}>
       <FlatList 
-          data = {FlowerSlide} 
+          data = {flowerSlideData} 
           renderItem={({item}) => <FlowerSlideItem item = {item}/>}
           horizontal
           
@@ -94,7 +129,7 @@ export default function HomeScreen() {
          ref={slideRef}
       />
       </View>
-      <Paginator data = {FlowerSlide} scrollX={scrollX}/>
+      <Paginator data = {flowerSlideData} scrollX={scrollX}/>
 
 
       <Text style={styles.text}>Recommended For You</Text>
@@ -160,7 +195,7 @@ const styles = StyleSheet.create({
       },
       text: {
         
-        fontSize: 15, 
+        fontSize: 25, 
         fontWeight: 'bold',
         color: "#000000",
         // marginBottom: 50, 
