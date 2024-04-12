@@ -68,7 +68,7 @@ export default function HomeScreen() {
         <FilterIcon name="filter-outline" size={30} color="#148fcc" />
         
       </View>
-      <Text>Special Offer</Text>
+      <Text style={styles.text}>Special Offer</Text>
 
 
       
@@ -95,24 +95,28 @@ export default function HomeScreen() {
       />
       </View>
       <Paginator data = {FlowerSlide} scrollX={scrollX}/>
+
+
+      <Text style={styles.text}>Recommended For You</Text>
       
 
       {/* <Text>Recommended for you</Text> */}
       {/* Flatlist below indicates the flower list vertical scroll */}
-      <View style={styles.colFlatcontainer}>
+      {/* <View style={styles.colFlatcontainer}> */}
       <FlatList
       data = {FlowerList} 
       renderItem={({item}) => <FlowerListItem item = {item}/>}
       numColumns={2}
-      // contentContainerStyle={{gap: 10,padding: 50}}
+      contentContainerStyle={{gap: 7,padding: 7}}
       columnWrapperStyle={{gap: 10}}
+      showsVerticalScrollIndicator={false}
 
       />
-      </View>
+      {/* </View> */}
 
 
                     
-      <View style={styles.footer}>
+      {/* <View style={styles.footer}>
         <View style={styles.iconContainer}>
           <Icon1 name="home" size={30} color="black" /> 
           <Text style={styles.footerText}>Home</Text>
@@ -137,7 +141,7 @@ export default function HomeScreen() {
         <Icon5 name="profile" size={30} color="black" /> 
           <Text style={styles.footerText}>Profile</Text>
         </View>
-      </View>
+      </View>   */}
         
     
     </View>
@@ -158,7 +162,8 @@ const styles = StyleSheet.create({
         
         fontSize: 15, 
         fontWeight: 'bold',
-        marginBottom: 50, 
+        color: "#000000",
+        // marginBottom: 50, 
         
 
     }, 
@@ -172,10 +177,13 @@ const styles = StyleSheet.create({
       position: 'absolute', 
     bottom: 0, 
     width: "100%",
+    // padding: 18,
+    
       
     },
     iconContainer: {
       alignItems: 'center',
+      padding: 17,
     },
     footerText: {
       fontSize: 12,
@@ -230,14 +238,28 @@ const styles = StyleSheet.create({
     },
 
     rowFlatcontainer: {
-      flex: 1,
-       
+      // flex: 1,
+      
+      // borderWidth: 1,
+      marginTop: -2,
+      // flexDirection:"column",
       
   },
-  colFlatcontainer: {
-    flex: 1,
+//   colFlatcontainer: {
+//     // flex: 1,
+//     borderWidth: 2,
      
     
-},
+// },
+
+// text: {
+        
+//   fontSize: 15, 
+//   // fontWeight: 'bold',
+//   marginBottom: 50, 
+//   fontFamily: "Poppins-Regular",
+  
+
+// },
     
   });
