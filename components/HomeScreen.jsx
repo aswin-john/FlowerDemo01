@@ -1,13 +1,14 @@
 import React, { useState,useRef,useEffect } from 'react'
 import {
-    View,
-    Text,
-    StyleSheet,
-    TextInput,
-    FlatList,
-    Animated
-    
-  } from 'react-native'
+  SafeAreaView,
+  ScrollView,
+  View,
+  Text,
+  StyleSheet,
+  TextInput,
+  FlatList,
+  Animated
+} from 'react-native';
 
 import Icon1 from 'react-native-vector-icons/AntDesign'
 import Icon2 from 'react-native-vector-icons/MaterialIcons'
@@ -80,6 +81,8 @@ export default function HomeScreen() {
 
 
   return (
+    <SafeAreaView style={styles.safeArea}>
+      <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollViewContent}>
     <View style={styles.container}>
 
       <View style={styles.rowContainer}>
@@ -180,17 +183,27 @@ export default function HomeScreen() {
         
     
     </View>
+    </ScrollView>
+    </SafeAreaView>
   )
 }
 
 const styles = StyleSheet.create({
+        safeArea: {
+          flex: 1,
+          backgroundColor: '#fff' 
+      },
+        scrollView: {
+            flex: 1 
+        },
+        scrollViewContent: {
+            paddingBottom: 20 
+        },
    
       container: {
-          flex: 1,
-          backgroundColor: '#fff',
-          
-          paddingHorizontal: 20,
-          paddingBottom: 20, 
+        flex: 1,
+        paddingHorizontal: 20,
+ 
           
       },
       text: {
